@@ -33,9 +33,9 @@ app.get('/:id', async (req, res) => {
       'gender': user.gender,
       'Direct friends': getDirectFriends(user, users),
       'Friends of friends': getFriendsOfFriends(user, users),
-      'Friend suggestions': getFriendSuggestions(user, users) || null
+      'Friend suggestions': getFriendSuggestions(user, users) || 'Under construction!'
     }
-    res.json(userObj)
+    res.send(userObj)
   })
 })
 
