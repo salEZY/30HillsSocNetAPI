@@ -30,9 +30,10 @@ app.get('/:id', async (req, res) => {
       'first name': user.firstName,
       'surname': user.surname,
       'age': user.age,
+      'gender': user.gender,
       'Direct friends': getDirectFriends(user.friends, users),
       'Friends of friends': getFriendsOfFriends(user.friends, users),
-      'Friend suggestions': getFriendSuggestions() || null
+      'Friend suggestions': getFriendSuggestions(user, users) || null
     }
     res.json(userObj)
   })

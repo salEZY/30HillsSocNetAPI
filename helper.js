@@ -21,7 +21,7 @@ const getFriendsOfFriends = (friends, users) => {
   return friendsOfFriends
 }
 
-const getFriendSuggestions = () => {
+const getFriendSuggestions = (user, users) => {
   let suggestedFriends = []
 }
 
