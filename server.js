@@ -1,6 +1,10 @@
 const express = require('express')
 const fs = require('fs')
-const{ getDirectFriends, getFriendsOfFriends, getFriendSuggestions } = require('./helper')
+const {
+  getDirectFriends,
+  getFriendsOfFriends,
+  getFriendSuggestions
+} = require('./helper')
 const port = 8080
 
 const app = express()
@@ -20,25 +24,24 @@ app.get('/:id', async (req, res) => {
   await fs.readFile('data.json', (err, data) => {
     if (err) throw err
     let users = JSON.parse(data)
-    if(!users[id - 1]){
+    if (!users[id - 1]) {
       res.redirect('/')
+    } else {
+      const user = users[id - 1]
+
+      const userObj = {
+        Name: `${user.firstName} ${user.surname}`,
+        Age: user.age,
+        Gender: user.gender,
+        'Direct Friends': getDirectFriends(user, users),
+        'Friends of friends': getFriendsOfFriends(user, users),
+        'Friend Suggestions': getFriendSuggestions(user, users)
+      }
+      res.send(userObj)
     }
-    
-    const user = users[id - 1]
-   
-    const userObj = {
-      'first name': user.firstName,
-      'surname': user.surname,
-      'age': user.age,
-      'gender': user.gender,
-      'Direct friends': getDirectFriends(user, users),
-      'Friends of friends': getFriendsOfFriends(user, users),
-      'Friend suggestions': getFriendSuggestions(user, users) || 'Under construction!'
-    }
-    res.send(userObj)
   })
 })
 
 app.listen(port, () => {
-    console.log(`30Hills server started at port ${port}!`)
+  console.log(`30Hills server started at port ${port}!`)
 })
